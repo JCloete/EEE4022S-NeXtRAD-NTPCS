@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "pedestal.h"
+
 void main()
 {
     char stuff = 1;

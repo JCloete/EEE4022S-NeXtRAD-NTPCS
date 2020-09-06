@@ -1,11 +1,30 @@
 // Include file for Pedestal controller
 // Author: Jason Cloete
 
+// Pedestal Global Variables
+// Pedestal Position
+float current_latitude;
+float current_longitude;
+
+// Target Position
+float target_latitude;
+float target_longitude;
+
+// Current elevation/azimuth
+float current_azimuth;
+float current_elevation;
+
+float target_azimuth;
+float target_elevation;
+
+
 // Manual Tweaking of pedestal
 char set_azimuth(float pos, char block);
 char set_elevation(float pos, char block);
-float get_azimuth();
-float get_elevation();
+float get_current_azimuth();
+float get_current_elevation();
+float get_target_azimuth();
+float get_target_elevation();
 
 // Status updates
 char get_status();
