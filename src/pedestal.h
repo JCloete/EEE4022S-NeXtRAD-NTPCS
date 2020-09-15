@@ -1,49 +1,54 @@
 // Include file for Pedestal controller
 // Author: Jason Cloete
 
+#include "direction.h"
+
+// Status Defines
+
 // Pedestal Global Variables
 // Pedestal Position
-float current_latitude;
-float current_longitude;
+static double pedestal_latitude;
+static double pedestal_longitude;
+static double pedestal_altitude;
 
 // Target Position
-float target_latitude;
-float target_longitude;
+static double target_latitude;
+static double target_longitude;
+static double target_altitude;
 
 // Current elevation/azimuth
-float current_azimuth;
-float current_elevation;
+static double current_azimuth;
+static double current_elevation;
 
-float target_azimuth;
-float target_elevation;
+static double desired_azimuth;
+static double desired_elevation;
 
 
 // Manual Tweaking of pedestal
-char set_azimuth(float pos, char block);
-char set_elevation(float pos, char block);
-float get_current_azimuth();
-float get_current_elevation();
-float get_target_azimuth();
-float get_target_elevation();
+char set_azimuth(double pos, char block);
+char set_elevation(double pos, char block);
+double get_current_azimuth();
+double get_current_elevation();
+double get_desired_azimuth();
+double get_desired_elevation();
 
 // Status updates
 char get_status();
 
-// Target functions
-char set_target_position(float longitude, float latitude, float MAMSL); // MAMSL = Meters Above Mean Sea Level
-char get_target_position();
-
 // Pedestal Targeting Functions
-char set_position(float longitude, float latitude, float MAMSL);
-int* get_position();
-int* get_current_position();
+char set_pedestal_position(double latitude, double longitude, double altitude);
+double get_pedestal_position(char selection);
+
+// Target functions
+char set_target_position(double latitude, double longitude, double altitude); // MAMSL = Meters Above Mean Sea Level
+double get_target_position(char selection);
 
 // Tracking functions
 char set_tracking(char enable_tracking);
 char get_tracking();
 
 // Tolerance Functions
-char set_azimuth_tracking_tolerance(float tolerance);
-char set_elevation_tracking_tolerance(float tolerance);
-char set_tracking_tolerance(float azimuth_tolerance, float elevation_tolerance);
+char set_azimuth_tracking_tolerance(double tolerance);
+char set_elevation_tracking_tolerance(double tolerance);
+char set_tracking_tolerance(double azimuth_tolerance, double elevation_tolerance);
 char get_tracking_tolerance();
