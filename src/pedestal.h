@@ -1,5 +1,7 @@
 // Include file for Pedestal controller
 // Author: Jason Cloete
+#ifndef PEDESTAL_H
+#define PEDESTAL_H
 
 #include "direction.h"
 
@@ -52,3 +54,5 @@ char set_azimuth_tracking_tolerance(double tolerance);
 char set_elevation_tracking_tolerance(double tolerance);
 char set_tracking_tolerance(double azimuth_tolerance, double elevation_tolerance);
 char get_tracking_tolerance();
+
+#endif /* PEDESTAL_H */

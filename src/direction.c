@@ -1,12 +1,11 @@
 // These functions are used to calculate the Azimuth and Elevation to be used by the pedestal controlling functions.
-
 #include "direction.h"
 
 double calculate_azimuth(double pedestal_latitude, double target_latitude, double pedestal_longitude, double target_longitude)
 {
     double azimuth = atan2(target_latitude - pedestal_latitude, target_longitude - pedestal_longitude);
     azimuth = fmod(450 - azimuth * (180.0/M_PI), 360); // Get the compass bearing
-
+    
     return azimuth;
 }
 

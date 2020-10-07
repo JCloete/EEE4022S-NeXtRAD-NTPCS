@@ -34,26 +34,6 @@ char set_elevation(double angle, char block)
     return success;
 }
 
-double get_current_azimuth()
-{
-    return current_azimuth;
-}
-
-double get_current_elevation()
-{
-    return current_elevation;
-}
-
-double get_desired_azimuth()
-{
-    return desired_azimuth;
-}
-
-double get_desired_elevation()
-{
-    return desired_elevation;
-}
-
 char get_status()
 {
     char status = 0;
@@ -110,6 +90,7 @@ double get_pedestal_position(char selection)
     return position;
 }
 
+// Sets the targets position.
 char set_target_position(double latitude, double longitude, double altitude)
 {
     char success = 0;
@@ -159,3 +140,37 @@ double get_target_position(char selection)
     
     return position;
 }
+
+char set_desired_tracking(void)
+{
+    char success = 0;
+
+    desired_azimuth = calculate_azimuth(pedestal_latitude, target_latitude, pedestal_longitude, target_longitude);
+    desired_elevation = calculate_elevation(pedestal_latitude, target_latitude, pedestal_longitude, target_longitude, pedestal_altitude, target_altitude);
+
+    success = 1;
+    return success;
+}
+
+// Not needed because these variables are global
+/*
+double get_current_azimuth()
+{
+    return current_azimuth;
+}
+
+double get_current_elevation()
+{
+    return current_elevation;
+}
+
+double get_desired_azimuth()
+{
+    return desired_azimuth;
+}
+
+double get_desired_elevation()
+{
+    return desired_elevation;
+}
+*/
