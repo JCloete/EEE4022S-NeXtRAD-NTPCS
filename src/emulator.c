@@ -17,6 +17,12 @@ char RA0_pin;
 char DEC1_pin;
 char DEC0_pin;
 
+// Function declarations
+void increase_RA(void);
+void decrease_RA(void);
+void increase_DEC(void);
+void decrease_DEC(void);
+
 // Pin 6 = RA- | Pin 5 = DEC- | Pin 4 = DEC+ | Pin 3 = RA+ | Pin 0 = Reset all to zero
 void set_pin(char pin)
 {
@@ -46,7 +52,7 @@ void set_pin(char pin)
         DEC1_pin = 0;
         DEC0_pin = 0;
         RA0_pin = 0;
-        printf("Not a valid pin");
+        printf("Not a valid pin. Resetting all Pins!\n");
     }
 }
 
