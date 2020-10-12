@@ -152,6 +152,10 @@ char set_desired_tracking(void)
     return success;
 }
 
+
+
+
+
 // Not needed because these variables are global
 /*
 double get_current_azimuth()

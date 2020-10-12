@@ -15,6 +15,9 @@ void main()
     // set up device drivers and such. Which currently dont exist.
     // Limits and the like would also be setup here.
 
+    // Emulation setup
+    setup(0.0, 0.0, 1.0);
+
     // Get initial GPS location
     // Get phone GPS working and perhaps have a config.ini to read our gps position.
     double plat = -33.906718;
@@ -25,10 +28,8 @@ void main()
     // Generate Control loop thread
 
     double azimuth = calculate_azimuth(plat, tlat, plong, tlong);
-    double elevation = calculate_elevation(plat, tlat, plong, tlong, 0.0, 0.0);
+    double elevation = calculate_elevation(plat, tlat, plong, tlong, 1.0, 0.0);
     printf("Test Azimuth: %f \n", azimuth);
     printf("Test Elevation: %f \n", elevation);
     printf("===================================== \n");
-
-    increase_RA();
 }
