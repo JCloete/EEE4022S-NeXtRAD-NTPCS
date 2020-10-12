@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include "pedestal.h"
 
+double slew_rate = 4.8;
+double rate_multiplier = 1;
+
 char set_azimuth(double angle, char block)
 {
     char success = 0;

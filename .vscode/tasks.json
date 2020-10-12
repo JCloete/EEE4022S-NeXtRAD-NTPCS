@@ -8,6 +8,7 @@
 			"args": [
 				"-g",
 				"${workspaceFolder}/src/*.c",
+				"-pthread",
 				"-o",
 				"${workspaceFolder}/bin/${fileBasenameNoExtension}",
 				"-lm"

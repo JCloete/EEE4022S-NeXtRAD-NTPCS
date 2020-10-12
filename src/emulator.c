@@ -8,8 +8,8 @@ double emulated_azimuth;
 double emulated_elevation;
 
 // Emulated Rate
-double slew_rate;
-double rate_multiplier;
+double emulated_slew_rate = 4.8;
+double emulated_rate_multiplier;
 
 // Emulation of the pins. 1 = increase, 0 = decrease
 char RA1_pin;
@@ -56,11 +56,11 @@ void set_pin(char pin)
     }
 }
 
-void setup(double starting_azimuth, double starting_elevation, double starting_rate_multiplier)
+void setup(double starting_azimuth, double starting_elevation, double starting_emulated_rate_multiplier)
 {
     emulated_azimuth = starting_azimuth;
     emulated_elevation = starting_elevation;
-    rate_multiplier = starting_rate_multiplier;
+    emulated_rate_multiplier = starting_emulated_rate_multiplier;
 
     RA1_pin = 0;
     RA0_pin = 0;
@@ -69,49 +69,67 @@ void setup(double starting_azimuth, double starting_elevation, double starting_r
 }
 
 // This is the function that starts emulation of the pedestal
-void run(void)
+void *runThread(void *vargp)
 {
+    struct timeval start, end;
+    double elapsedTime;
     while(1)
     {
+        // Get start of while loop
+        gettimeofday(&start, NULL);
+
         increase_RA();
         decrease_RA();
         increase_DEC();
         decrease_DEC();
+        //printf("Em_Azi: %lf\n", emulated_azimuth);
+        
+        // Check if 1 milisecond has elapsed
+        gettimeofday(&end, NULL);
+        elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
+        while(elapsedTime < 1.0)
+        {
+            gettimeofday(&end, NULL);
+            elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
+        }
     }
 }
 
 void increase_RA(void)
 {
-    while(RA1_pin && !RA0_pin)
+    if(RA1_pin && !RA0_pin)
     {
-        emulated_azimuth += slew_rate*rate_multiplier/1000;
-        usleep(1000);
+        emulated_azimuth += emulated_slew_rate*emulated_rate_multiplier/1000.0;
     }
 }
 
 void decrease_RA(void)
 {
-    while(!RA1_pin && RA0_pin)
+    if(!RA1_pin && RA0_pin)
     {
-        emulated_azimuth -= slew_rate*rate_multiplier/1000;
-        usleep(1000);
+        emulated_azimuth -= emulated_slew_rate*emulated_rate_multiplier/1000.0;
     }
 }
 
 void increase_DEC(void)
 {
-    while(DEC1_pin && !DEC0_pin)
+    if(DEC1_pin && !DEC0_pin)
     {
-        emulated_elevation += slew_rate*rate_multiplier/1000;
-        usleep(1000);
+        emulated_elevation += emulated_slew_rate*emulated_rate_multiplier/1000.0;
     }
 }
 
 void decrease_DEC(void)
 {
-    while(!DEC1_pin && DEC0_pin)
+    if(!DEC1_pin && DEC0_pin)
     {
-        emulated_elevation -= slew_rate*rate_multiplier/1000;
-        usleep(1000);
+        emulated_elevation -= emulated_slew_rate*emulated_rate_multiplier/1000.0;
     }
+}
+
+void debug_parameters(void)
+{
+    printf("Emulated Azimuth: %lf\n", emulated_azimuth);
+    printf("Emulated Elevation: %lf\n", emulated_elevation);
+    printf("Pins = RA-: %d | RA+: %d | DEC-: %d | DEC+: %d |\n", RA0_pin, RA1_pin, DEC0_pin, DEC1_pin);
 }

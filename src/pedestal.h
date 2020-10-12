@@ -9,21 +9,25 @@
 
 // Pedestal Global Variables
 // Pedestal Position
-static double pedestal_latitude;
-static double pedestal_longitude;
-static double pedestal_altitude;
+double pedestal_latitude;
+double pedestal_longitude;
+double pedestal_altitude;
 
 // Target Position
-static double target_latitude;
-static double target_longitude;
-static double target_altitude;
+double target_latitude;
+double target_longitude;
+double target_altitude;
 
 // Current elevation/azimuth
-static double current_azimuth;
-static double current_elevation;
+double current_azimuth;
+double current_elevation;
 
-static double desired_azimuth;
-static double desired_elevation;
+double desired_azimuth;
+double desired_elevation;
+
+// Characteristics
+double slew_rate;
+double rate_multiplier;
 
 
 // Manual Tweaking of pedestal
