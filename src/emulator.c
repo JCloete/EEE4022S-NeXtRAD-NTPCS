@@ -83,6 +83,7 @@ void *runThread(void *vargp)
         //printf("Em_Azi: %lf\n", emulated_azimuth);
         
         // Check if 1 milisecond has elapsed
+        // Potentially Implement error correction
         gettimeofday(&end, NULL);
         elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
         while(elapsedTime < 1.0)
@@ -98,6 +99,12 @@ void increase_RA(void)
     if(RA1_pin && !RA0_pin)
     {
         emulated_azimuth += emulated_slew_rate*emulated_rate_multiplier/1000.0;
+
+        // Check for Wrap Around
+        if (emulated_azimuth >= 360.0)
+        {
+            emulated_azimuth -= 360.0;
+        }
     }
 }
 
@@ -106,6 +113,11 @@ void decrease_RA(void)
     if(!RA1_pin && RA0_pin)
     {
         emulated_azimuth -= emulated_slew_rate*emulated_rate_multiplier/1000.0;
+
+        if (emulated_azimuth < 0.0)
+        {
+            emulated_azimuth += 360.0;
+        }
     }
 }
 

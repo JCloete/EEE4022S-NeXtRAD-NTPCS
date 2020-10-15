@@ -40,8 +40,8 @@ void main()
     double tlong = 18.443462;
 
     // Set Desired Azimuth
-    set_azimuth(15.0, 0);
-    set_elevation(45.0, 0);
+    set_azimuth(354.0, 0);
+    set_elevation(20.0, 0);
     printf("Desired Azimuth: %lf\n", desired_azimuth);
     printf("Desired Elevation: %lf\n", desired_elevation);
     
