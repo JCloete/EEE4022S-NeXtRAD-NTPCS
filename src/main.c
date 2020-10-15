@@ -7,8 +7,6 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#include <sys/time.h>
-
 // User Includes
 #include "pedestal.h"
 
@@ -20,9 +18,10 @@ void main()
     // System setup.
     // set up device drivers and such. Which currently dont exist.
     // Limits and the like would also be setup here.
+    pedestal_setup(4.8, 1.0, 0.0, 0.0);
 
     // Emulation setup
-    setup(0.0, 0.0, 1.0);
+    emulator_setup(0.0, 0.0, 1.0);
 
     // Thread ID's
     pthread_t tid[2];
@@ -40,50 +39,27 @@ void main()
     double tlat = -33.899073;
     double tlong = 18.443462;
 
-    // Initial Variables
-    current_azimuth = 0.0;
+    // Set Desired Azimuth
     set_azimuth(15.0, 0);
+    set_elevation(45.0, 0);
     printf("Desired Azimuth: %lf\n", desired_azimuth);
+    printf("Desired Elevation: %lf\n", desired_elevation);
     
 
     // Generate Control loop
     while(1)
     {
-        struct timeval start, end;
-        double elapsedTime;
-        if((desired_azimuth - current_azimuth) > 5.0)
-        {
-            double difference = desired_azimuth - current_azimuth;
-            double time_taken = difference/slew_rate*1000;
-            gettimeofday(&start, NULL);
-            set_pin(3);
-
-            gettimeofday(&end, NULL);
-            elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-
-            while(elapsedTime < time_taken)
-            {
-                gettimeofday(&end, NULL);
-                elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-            }
-
-            set_pin(0);
-            gettimeofday(&end, NULL);
-            elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-
-            current_azimuth = slew_rate/1000 * elapsedTime;
-            printf("Current Azimuth: %lf\n", current_azimuth);
-            debug_parameters();
-            asm("NOP");
-
-        } else if ((desired_azimuth - current_azimuth) < -5.0) {
-            gettimeofday(&start, NULL);
-            set_pin(6);
-        }
+        begin_control();
     }
 
+    // Debug the pedestal
+    debug_parameters();
 
-    // Testing Azimuth Calcs
+    // Stop Thread
+    pthread_cancel(tid[0]);
+}
+
+// Testing Azimuth Calcs
     /*
     double azimuth = calculate_azimuth(plat, tlat, plong, tlong);
     double elevation = calculate_elevation(plat, tlat, plong, tlong, 1.0, 0.0);
@@ -112,9 +88,3 @@ void main()
         i += 1;
     }
     */
-
-    debug_parameters();
-
-    // Stop Thread
-    pthread_cancel(tid[0]);
-}

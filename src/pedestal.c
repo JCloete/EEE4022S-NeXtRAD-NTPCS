@@ -1,10 +1,24 @@
 // File with API commands to control the pedestal
-#include <stdio.h>
 #include "pedestal.h"
 
-double slew_rate = 4.8;
-double rate_multiplier = 1;
+// ==================================================================================================================
+// System Control
+char pedestal_setup(double starting_slew_rate, double starting_rate_multiplier, double starting_current_azimuth, double starting_current_elevation)
+{
+    char success = 0;
 
+    current_azimuth = starting_current_azimuth;
+    current_elevation = starting_current_elevation;
+    slew_rate = starting_slew_rate; // Default value for this thesis is 4.8 degrees
+    rate_multiplier = starting_rate_multiplier; // Default value is 1X
+
+    // Successfully setup pedestal
+    success = 1;
+    return success;
+}
+
+// ==================================================================================================================
+// Manual Tweaking of pedestal
 char set_azimuth(double angle, char block)
 {
     char success = 0;
@@ -37,6 +51,9 @@ char set_elevation(double angle, char block)
     return success;
 }
 
+// ==================================================================================================================
+// Status updates
+// 0 = Ready for command | 1 = Tracking | 2 = Moving | 
 char get_status()
 {
     char status = 0;
@@ -44,6 +61,8 @@ char get_status()
     return status;
 }
 
+// ==================================================================================================================
+// Pedestal Targeting Functions
 char set_pedestal_position(double latitude, double longitude, double altitude)
 {
     char success = 0;
@@ -93,6 +112,8 @@ double get_pedestal_position(char selection)
     return position;
 }
 
+// ==================================================================================================================
+// Target functions
 // Sets the targets position.
 char set_target_position(double latitude, double longitude, double altitude)
 {
@@ -144,6 +165,8 @@ double get_target_position(char selection)
     return position;
 }
 
+// ==================================================================================================================
+// Tracking functions
 char set_desired_tracking(void)
 {
     char success = 0;
@@ -154,30 +177,3 @@ char set_desired_tracking(void)
     success = 1;
     return success;
 }
-
-
-
-
-
-// Not needed because these variables are global
-/*
-double get_current_azimuth()
-{
-    return current_azimuth;
-}
-
-double get_current_elevation()
-{
-    return current_elevation;
-}
-
-double get_desired_azimuth()
-{
-    return desired_azimuth;
-}
-
-double get_desired_elevation()
-{
-    return desired_elevation;
-}
-*/

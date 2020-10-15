@@ -1,13 +1,13 @@
-// Include file for Pedestal controller
+// Include file for Pedestal System Controller
 // Author: Jason Cloete
 #ifndef PEDESTAL_H
 #define PEDESTAL_H
 
+// Includes
+#include <stdio.h>
 #include "direction.h"
 
-// Status Defines
-
-// Pedestal Global Variables
+// Pedestal Variables
 // Pedestal Position
 double pedestal_latitude;
 double pedestal_longitude;
@@ -25,18 +25,19 @@ double current_elevation;
 double desired_azimuth;
 double desired_elevation;
 
-// Characteristics
+// Variable Characteristics
 double slew_rate;
 double rate_multiplier;
 
+// Status Defines
+
+// System Control
+char pedestal_setup(double starting_slew_rate, double starting_rate_multiplier, double starting_current_azimuth, double starting_current_elevation);
+void begin_control();
 
 // Manual Tweaking of pedestal
 char set_azimuth(double pos, char block);
 char set_elevation(double pos, char block);
-double get_current_azimuth();
-double get_current_elevation();
-double get_desired_azimuth();
-double get_desired_elevation();
 
 // Status updates
 char get_status();

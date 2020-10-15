@@ -1,6 +1,4 @@
 // This file emulates the functionality of the AZ/EQ-G Mount
-#include <unistd.h>
-#include <sys/time.h>
 #include "emulator.h"
 
 // Emulated Variables
@@ -52,11 +50,11 @@ void set_pin(char pin)
         DEC1_pin = 0;
         DEC0_pin = 0;
         RA0_pin = 0;
-        printf("Not a valid pin. Resetting all Pins!\n");
+        printf("Resetting all Pins!\n");
     }
 }
 
-void setup(double starting_azimuth, double starting_elevation, double starting_emulated_rate_multiplier)
+void emulator_setup(double starting_azimuth, double starting_elevation, double starting_emulated_rate_multiplier)
 {
     emulated_azimuth = starting_azimuth;
     emulated_elevation = starting_elevation;
