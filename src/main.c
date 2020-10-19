@@ -29,12 +29,6 @@ void main()
     printf("This program was created by Jason Cloete as part of a UCT EBE Final Year Project. \n");
     printf("Are you ready to proceed? y/n \n");
 
-    /*
-    // Get User input
-    fgets(input_buffer, sizeof(input_buffer) - 1, stdin);
-    sscanf(input_buffer, "%c", &user_input);
-    */
-
     // Get user input
     scanf("%c", &user_input);
 
@@ -87,6 +81,7 @@ void main()
     printf("Desired Elevation: %lf\n", desired_elevation);
     */
 
+    char check;
     double azimuth_input;
     double elevation_input;
     // Generate Control loop
@@ -98,14 +93,8 @@ void main()
         printf("2 - Automatic Control \n");
         printf("q - Quit the Program \n");
 
-        /*
-        // Get User input
-        fgets(input_buffer, sizeof(input_buffer) - 1, stdin);
-        sscanf(input_buffer, "%c", &user_input);
-        */
-
         // Get User Input
-        scanf(" %c", &user_input);
+        check = scanf(" %c", &user_input);
 
         if (user_input == '1')
         {
