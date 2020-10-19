@@ -17,6 +17,7 @@ double pedestal_altitude;
 double target_latitude;
 double target_longitude;
 double target_altitude;
+double target_distance;
 
 // Current elevation/azimuth
 double current_azimuth;
@@ -51,7 +52,7 @@ char set_target_position(double latitude, double longitude, double altitude); //
 double get_target_position(char selection);
 
 // Tracking functions
-char set_tracking(char enable_tracking);
+char set_desired_tracking(void);
 char get_tracking();
 
 // Tolerance Functions

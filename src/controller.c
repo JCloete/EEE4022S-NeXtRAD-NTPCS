@@ -5,16 +5,34 @@
 #include "controller.h"
 
 // Function prototypes
+void start_control();
 char start_azimuth_control(char direction);
 char start_elevation_control(char direction);
 
 // Function definitions
-void begin_control()
+// Start the controller. 0 = Manual adjustment | 1 = Automatic Adjustment
+void start_controller(char selection)
+{
+    if (selection == 0)
+    {
+        start_control();
+    } else if (selection == 1)
+    {
+        // Automatically set pedestal to point at a Target GPS location
+        set_desired_tracking();
+        start_control();
+    } else {
+        printf("Invalid Control Selection! \n");
+    }
+}
+
+// Control the pedestal to point at manually set azimuth and elevation
+void start_control()
 {
     // 1 is the positive direction. 0 is negative.
     double difference = desired_azimuth - current_azimuth;
     // Check if the controller needs to move
-    if(abs(difference) > 5.0 && abs(difference) < (360.0 - 5.0))
+    if(fabs(difference) > 5.0 && fabs(difference) < (360.0 - 5.0))
     {
         // Determine whether to move CCW or CW
         if(difference > 0 && difference <= 180)
@@ -26,10 +44,10 @@ void begin_control()
     }
 
     // 1 is the positive direction. 0 is negative.
-    if((desired_elevation - current_elevation) > 5.0)
+    if((desired_elevation - current_elevation) > 0.05)
     {
         start_elevation_control(1);
-    } else if ((desired_elevation - current_elevation) < -5.0) {
+    } else if ((desired_elevation - current_elevation) < -0.05) {
         start_elevation_control(0);
     }
 }
@@ -51,10 +69,10 @@ char start_azimuth_control(char direction)
     if (direction == 0)
     {
         // Check for wrap-around
-        difference = abs(desired_azimuth - current_azimuth);
+        difference = fabs(desired_azimuth - current_azimuth);
         if (difference > 180) 
         {
-            difference = abs((desired_azimuth - 360.0) - current_azimuth);
+            difference = fabs((desired_azimuth - 360.0) - current_azimuth);
         }
         time_taken = difference/slew_rate*1000;
 
@@ -65,10 +83,10 @@ char start_azimuth_control(char direction)
         usleep(time_taken * 1000);
     } else if (direction == 1) {
 
-        difference = abs(desired_azimuth - current_azimuth);
+        difference = fabs(desired_azimuth - current_azimuth);
         if (difference >= 180) 
         {
-            difference = abs((360.0 + desired_azimuth) - current_azimuth);
+            difference = fabs((360.0 + desired_azimuth) - current_azimuth);
         }
         time_taken = difference/slew_rate*1000;
 
@@ -118,10 +136,6 @@ char start_azimuth_control(char direction)
             current_azimuth -= 360.0;
         }
         printf("Current Azimuth: %lf\n", current_azimuth);
-
-        // For debugging
-        debug_parameters();
-        asm("NOP");
     }
     
     return success;
@@ -137,7 +151,7 @@ char start_elevation_control(char direction)
     struct timeval start, end;
     double elapsedTime;
 
-    double difference = desired_elevation - current_elevation;
+    double difference = fabs(desired_elevation - current_elevation);
     double time_taken = difference/slew_rate*1000;
 
     // Measure amount of time spent turning
@@ -174,12 +188,15 @@ char start_elevation_control(char direction)
         gettimeofday(&end, NULL);
         elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
 
-        current_elevation = slew_rate/1000.0 * elapsedTime;
-        printf("Current Elevation: %lf\n", current_elevation);
+        // Calculate correct direction of slew
+        if (direction == 0)
+        {
+            current_elevation -= slew_rate/1000 * elapsedTime;
+        } else if (direction == 1) {
+            current_elevation += slew_rate/1000 * elapsedTime;
+        }
 
-        // For debugging
-        debug_parameters();
-        asm("NOP");
+        printf("Current Elevation: %lf\n", current_elevation);
     }
     
     return success;

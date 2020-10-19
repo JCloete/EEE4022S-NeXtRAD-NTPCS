@@ -139,7 +139,11 @@ void decrease_DEC(void)
 
 void debug_parameters(void)
 {
+    printf("============================================================================================ \n");
+    printf("EMULATOR DEBUG INFORMATION \n");
+    printf("----------------------------- \n");
     printf("Emulated Azimuth: %lf\n", emulated_azimuth);
     printf("Emulated Elevation: %lf\n", emulated_elevation);
     printf("Pins = RA-: %d | RA+: %d | DEC-: %d | DEC+: %d |\n", RA0_pin, RA1_pin, DEC0_pin, DEC1_pin);
+    printf("============================================================================================ \n");
 }

@@ -172,7 +172,12 @@ char set_desired_tracking(void)
     char success = 0;
 
     desired_azimuth = calculate_azimuth(pedestal_latitude, target_latitude, pedestal_longitude, target_longitude);
+    target_distance = calculate_distance(pedestal_latitude, target_latitude, pedestal_longitude, target_longitude);
     desired_elevation = calculate_elevation(pedestal_latitude, target_latitude, pedestal_longitude, target_longitude, pedestal_altitude, target_altitude);
+
+    printf("Calculated Desired Azimuth: %lf\n", desired_azimuth);
+    printf("Calculated Distance: %lf\n", target_distance);
+    printf("Calculated Desired Elevation: %lf\n", desired_elevation);
 
     success = 1;
     return success;

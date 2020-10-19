@@ -10,7 +10,9 @@
 #include "pedestal.h"
 #include "emulator.h"
 
+// Variables
+
 // controller functions
-void begin_control();
+void start_controller(char selection);
 
 #endif /* CONTROLLER_H */
