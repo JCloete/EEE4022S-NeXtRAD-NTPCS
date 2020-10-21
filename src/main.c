@@ -18,6 +18,9 @@
 double get_azimuth_input();
 double get_elevation_input();
 
+// Debug Options
+char debug = 0;
+
 void main()
 {
     // Creation of input buffer and answer value
@@ -27,18 +30,20 @@ void main()
     // System Welcome
     printf("Welcome to NeXtRAD Control System! \n");
     printf("This program was created by Jason Cloete as part of a UCT EBE Final Year Project. \n");
-    printf("Are you ready to proceed? y/n \n");
+    printf("Are you ready to proceed? y/n (d for DEBUG MODE) \n");
 
     // Get user input
     scanf("%c", &user_input);
 
     // Stop Program
-    if (user_input == 'n')
-    {
+    if (user_input == 'd') {
+        debug = 1;
+        printf("[DEBUG MODE ACTIVE] \n");
+    } else if (user_input != 'y') {
         return;
     }
-
-    printf("Proceeding with Setup. Please Wait...");
+    
+    printf("Proceeding with Setup. Please Wait... \n");
 
     // System setup.
     // set up device drivers and such. Which currently dont exist.
@@ -53,10 +58,11 @@ void main()
     // Thread setup
     int err = pthread_create(&(tid[0]), NULL, runThread, NULL);
     if (err != 0)
-        printf("\ncan't create thread :[%s]", strerror(err));
-    else
-        printf("\n Thread created successfully\n");
-
+    {
+        if (debug) printf("[DEBUG] can't create thread :[%s] \n", strerror(err));
+    } else {
+        if (debug) printf("[DEBUG] Thread created successfully. \n");
+    }
     // Get initial GPS location
     // Get phone GPS working and perhaps have a config.ini to read our gps position.
     double plat = -33.906718;
@@ -87,11 +93,13 @@ void main()
     // Generate Control loop
     while(user_input != 'q')
     {
+        printf("******************************** \n");
         printf("Control Menu \n");
         printf("--------------------------- \n");
         printf("1 - Manual Control \n");
         printf("2 - Automatic Control \n");
         printf("q - Quit the Program \n");
+        printf("******************************** \n");
 
         // Get User Input
         check = scanf(" %c", &user_input);
