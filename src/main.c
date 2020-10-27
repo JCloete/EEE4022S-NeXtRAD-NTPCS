@@ -98,6 +98,7 @@ void main()
         printf("--------------------------- \n");
         printf("1 - Manual Control \n");
         printf("2 - Automatic Control \n");
+        printf("3 - Settings \n");
         printf("q - Quit the Program \n");
         printf("******************************** \n");
 
@@ -189,33 +190,3 @@ double get_elevation_input()
 
     return input;
 }
-
-// Testing Azimuth Calcs
-    /*
-    double azimuth = calculate_azimuth(plat, tlat, plong, tlong);
-    double elevation = calculate_elevation(plat, tlat, plong, tlong, 1.0, 0.0);
-    printf("Test Azimuth: %f \n", azimuth);
-    printf("Test Elevation: %f \n", elevation);
-    printf("===================================== \n");
-    */
-
-    // Debugging emulator
-    /*
-    struct timeval start, end;
-    double elapsedTime;
-    set_pin(3);
-    int i = 0;
-    while(i < 10)
-    {
-        gettimeofday(&start, NULL);
-        gettimeofday(&end, NULL);
-
-        elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-        while(elapsedTime < 1000)
-        {
-            gettimeofday(&end, NULL);
-            elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-        }
-        i += 1;
-    }
-    */

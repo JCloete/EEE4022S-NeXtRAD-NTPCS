@@ -84,7 +84,7 @@ char start_azimuth_control(char direction)
     } else if (direction == 1) {
 
         difference = fabs(desired_azimuth - current_azimuth);
-        if (difference >= 180) 
+        if (difference > 180) 
         {
             difference = fabs((360.0 + desired_azimuth) - current_azimuth);
         }
