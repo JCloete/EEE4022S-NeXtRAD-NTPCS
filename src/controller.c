@@ -32,7 +32,7 @@ void start_control()
     // 1 is the positive direction. 0 is negative.
     double difference = desired_azimuth - current_azimuth;
     // Check if the controller needs to move
-    if(fabs(difference) > 5.0 && fabs(difference) < (360.0 - 5.0))
+    if(fabs(difference) > azimuth_tolerance && fabs(difference) < (360.0 - azimuth_tolerance))
     {
         // Determine whether to move CCW or CW
         if(difference > 0 && difference <= 180)
@@ -44,10 +44,10 @@ void start_control()
     }
 
     // 1 is the positive direction. 0 is negative.
-    if((desired_elevation - current_elevation) > 0.05)
+    if((desired_elevation - current_elevation) > elevation_tolerance)
     {
         start_elevation_control(1);
-    } else if ((desired_elevation - current_elevation) < -0.05) {
+    } else if ((desired_elevation - current_elevation) < -elevation_tolerance) {
         start_elevation_control(0);
     }
 }
@@ -138,6 +138,8 @@ char start_azimuth_control(char direction)
         printf("Current Azimuth: %lf\n", current_azimuth);
     }
     
+    // Emulated Closed Loop Feedback
+    //current_azimuth = emulated_azimuth;
     return success;
 }
 
@@ -199,5 +201,8 @@ char start_elevation_control(char direction)
         printf("Current Elevation: %lf\n", current_elevation);
     }
     
+    // Emulated Closed loop feedback
+    //current_elevation = emulated_elevation;
+
     return success;
 }

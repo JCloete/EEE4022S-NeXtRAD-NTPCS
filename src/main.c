@@ -18,6 +18,10 @@
 double get_azimuth_input();
 double get_elevation_input();
 
+void settings_menu(char user_input);
+double get_azimuth_tolerance_input();
+double get_elevation_tolerance_input();
+
 // Debug Options
 char debug = 0;
 
@@ -67,10 +71,10 @@ void main()
     // Get phone GPS working and perhaps have a config.ini to read our gps position.
     double plat = -33.906718;
     double plong = 18.446167;
-    double palt = 1.0;
+    double palt = 2.0;
 
-    double tlat = -33.899073;
-    double tlong = 18.443462;
+    double tlat = -33.866157;
+    double tlong = 18.448670;
     double talt = 0.0;
 
     // Set Pedestal Positions
@@ -120,6 +124,8 @@ void main()
         } else if (user_input == '2') {
             start_controller(1);
             printf("Finished Movement. \n");
+        } else if (user_input == '3') {
+            settings_menu(user_input);
         } else if (user_input == 'q') {
             printf("Quitting out the program! \n");
         } else {
@@ -189,4 +195,94 @@ double get_elevation_input()
     }
 
     return input;
+}
+
+double get_azimuth_tolerance_input()
+{
+    double input;
+    char check;
+    char valid_input = 0;
+    
+    while (valid_input != 1)
+    {
+        printf("Enter an Azimuth Tolerance (0.1 Min | 90.0 deg Max): ");
+        check = scanf(" %lf", &input);
+
+        if (check)
+        {
+            if (input >= 0.1 && input <= 90.0)
+            {
+                valid_input = 1;
+            } else {
+                printf("Tolerance out of range! (0.1 Min | 90.0 deg Max) \n");
+            }
+        } else {
+            printf("Invalid input. Enter a valid number. \n");
+            while ( (check = getchar()) != EOF && check != '\n' );
+        }
+    }
+
+    return input;
+}
+
+double get_elevation_tolerance_input()
+{
+    double input;
+    char check;
+    char valid_input = 0;
+    
+    while (valid_input != 1)
+    {
+        printf("Enter an Elevation Tolerance (0.01 Min | 25.0 deg Max): ");
+        check = scanf(" %lf", &input);
+
+        if (check)
+        {
+            if (input >= 0.01 && input <= 25.0)
+            {
+                valid_input = 1;
+            } else {
+                printf("Tolerance out of range! (0.01 Min | 25.0 deg Max) \n");
+            }
+        } else {
+            printf("Invalid input. Enter a valid number. \n");
+            while ( (check = getchar()) != EOF && check != '\n' );
+        }
+    }
+
+    return input;
+}
+
+void settings_menu(char user_input)
+{
+    char check;
+    while (user_input != 'b')
+    {
+        printf("******************************** \n");
+        printf("Settings Menu \n");
+        printf("--------------------------- \n");
+        printf("1 - Adjust Tolerance \n");
+        printf("2 - Change Target Coords \n");
+        printf("3 - Change Pedestal Coords \n");
+        printf("b - Back to Control Menu \n");
+        printf("******************************** \n");
+
+        // Get User Input
+        check = scanf(" %c", &user_input);
+
+        if (user_input == '1')
+        {
+            azimuth_tolerance = get_azimuth_tolerance_input();
+            elevation_tolerance = get_elevation_tolerance_input();
+        } else if (user_input == '2') {
+            asm("NOP");
+        } else if (user_input == '3') {
+            asm("NOP");
+        } else if (user_input == 'b') {
+            printf("Back to Control Menu \n");
+        } else {
+            printf("Invalid Selection. \n");
+            while ( (check = getchar()) != EOF && check != '\n' );
+        }
+    }
 }

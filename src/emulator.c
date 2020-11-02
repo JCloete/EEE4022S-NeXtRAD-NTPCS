@@ -1,6 +1,8 @@
 // This file emulates the functionality of the AZ/EQ-G Mount
 #include "emulator.h"
 
+#include "pedestal.h"
+
 // Emulated Variables
 double emulated_azimuth;
 double emulated_elevation;
@@ -50,7 +52,7 @@ void set_pin(char pin)
         DEC1_pin = 0;
         DEC0_pin = 0;
         RA0_pin = 0;
-        printf("Resetting all Pins!\n");
+        //printf("Resetting all Pins!\n");
     }
 }
 
@@ -142,8 +144,10 @@ void debug_parameters(void)
     printf("============================================================================================ \n");
     printf("EMULATOR DEBUG INFORMATION \n");
     printf("----------------------------- \n");
+    printf("Reported Azimuth: %lf\n", current_azimuth);
+    printf("Reported Elevation: %lf\n", current_elevation);
     printf("Emulated Azimuth: %lf\n", emulated_azimuth);
     printf("Emulated Elevation: %lf\n", emulated_elevation);
-    printf("Pins = RA-: %d | RA+: %d | DEC-: %d | DEC+: %d |\n", RA0_pin, RA1_pin, DEC0_pin, DEC1_pin);
+    // printf("Pins = RA-: %d | RA+: %d | DEC-: %d | DEC+: %d |\n", RA0_pin, RA1_pin, DEC0_pin, DEC1_pin);
     printf("============================================================================================ \n");
 }

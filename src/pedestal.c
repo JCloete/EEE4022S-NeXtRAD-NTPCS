@@ -12,6 +12,10 @@ char pedestal_setup(double starting_slew_rate, double starting_rate_multiplier, 
     slew_rate = starting_slew_rate; // Default value for this thesis is 4.8 degrees
     rate_multiplier = starting_rate_multiplier; // Default value is 1X
 
+    // Default Tolerances
+    azimuth_tolerance = 1.0;
+    elevation_tolerance = 0.05;
+
     // Successfully setup pedestal
     success = 1;
     return success;

@@ -26,6 +26,10 @@ double current_elevation;
 double desired_azimuth;
 double desired_elevation;
 
+// Tolerances
+double azimuth_tolerance;
+double elevation_tolerance;
+
 // Variable Characteristics
 double slew_rate;
 double rate_multiplier;
