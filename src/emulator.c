@@ -23,6 +23,7 @@ void decrease_RA(void);
 void increase_DEC(void);
 void decrease_DEC(void);
 
+// Function used to emulate a RPi Pin being set high
 // Pin 6 = RA- | Pin 5 = DEC- | Pin 4 = DEC+ | Pin 3 = RA+ | Pin 0 = Reset all to zero
 void set_pin(char pin)
 {
@@ -56,6 +57,7 @@ void set_pin(char pin)
     }
 }
 
+// This function sets up the emulator
 void emulator_setup(double starting_azimuth, double starting_elevation, double starting_emulated_rate_multiplier)
 {
     emulated_azimuth = starting_azimuth;
@@ -93,6 +95,9 @@ void *runThread(void *vargp)
             gettimeofday(&end, NULL);
             elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
         }
+
+        // Testing of accuracy of timing.
+        // printf("Elapsed Time: %lf \n", elapsedTime);
     }
 }
 
@@ -116,6 +121,7 @@ void decrease_RA(void)
     {
         emulated_azimuth -= emulated_slew_rate*emulated_rate_multiplier/1000.0;
 
+        // Check for Wrap Around
         if (emulated_azimuth < 0.0)
         {
             emulated_azimuth += 360.0;

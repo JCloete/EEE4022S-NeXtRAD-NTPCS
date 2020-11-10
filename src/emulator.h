@@ -1,4 +1,6 @@
 // Access to the functions
+#ifndef EMULATOR_H
+#define EMULATOR_H
 
 // Includes
 #include <stdio.h>
@@ -10,3 +12,5 @@ void emulator_setup(double starting_azimuth, double starting_elevation, double s
 void *runThread(void *vargp);
 
 void debug_parameters(void);
+
+#endif /* EMULATOR_H */

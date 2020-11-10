@@ -105,15 +105,6 @@ char start_azimuth_control(char direction)
     // End the control function if no valid pin is chosen
     if (success)
     {
-        /*
-        gettimeofday(&end, NULL);
-        elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-        while(elapsedTime < time_taken)
-        {
-            gettimeofday(&end, NULL);
-            elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-        }
-        */
         set_pin(0);
         
         gettimeofday(&end, NULL);
@@ -177,15 +168,6 @@ char start_elevation_control(char direction)
     // End the control function if no valid pin is chosen
     if (success)
     {
-        /*
-        gettimeofday(&end, NULL);
-        elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-        while(elapsedTime < time_taken)
-        {
-            gettimeofday(&end, NULL);
-            elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);
-        }
-        */
         set_pin(0);
         gettimeofday(&end, NULL);
         elapsedTime = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_usec - start.tv_usec) / 1000.0);

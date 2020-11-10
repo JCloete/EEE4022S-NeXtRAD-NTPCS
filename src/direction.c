@@ -5,12 +5,6 @@
 
 double calculate_azimuth(double pedestal_latitude, double target_latitude, double pedestal_longitude, double target_longitude)
 {
-    // Direct Bearing - Inaccurate
-    /*
-    double azimuth = atan2(target_latitude - pedestal_latitude, target_longitude - pedestal_longitude);
-    azimuth = fmod(450 - azimuth * (180.0/M_PI), 360); // Get the compass bearing
-    */
-
     // Translate coords to rads
     double plat = pedestal_latitude * (M_PI/180.0);
     double tlat = target_latitude * (M_PI/180.0);
